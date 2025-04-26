@@ -10,5 +10,20 @@ services:
       - "8080:8080"
     networks:
       - flight-prices-net
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: flightprices
+      MONGO_INITDB_ROOT_PASSWORD: flightprices123
+    networks:
+      - flight-prices-net
+    volumes:
+      - mongodb_data:/data/db
 networks:
   flight-prices-net:
+volumes:
+  mongodb_data:

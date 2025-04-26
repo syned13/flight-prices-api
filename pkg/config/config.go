@@ -20,6 +20,12 @@ type AppConfig struct {
 	flightAPI FlightAPIConfig
 	serpAPI   SerpAPIConfig
 	jwt       JWTConfig
+	mongo     MongoDBConfig
+}
+
+type MongoDBConfig struct {
+	uri      string
+	database string
 }
 
 type AmadeusConfig struct {
@@ -66,6 +72,10 @@ func GetConfig() *AppConfig {
 			jwt: JWTConfig{
 				secret:     os.Getenv("JWT_SECRET"),
 				expiration: os.Getenv("JWT_EXPIRATION"),
+			},
+			mongo: MongoDBConfig{
+				uri:      getEnvOrDefault("MONGO_URI", ""),
+				database: getEnvOrDefault("MONGO_DATABASE", "flight-prices"),
 			},
 		}
 	})
@@ -131,3 +141,8 @@ func (c *AppConfig) Validate() error {
 
 	return nil
 }
+
+func (c *AppConfig) Mongo() MongoDBConfig { return c.mongo }
+
+func (c MongoDBConfig) URI() string      { return c.uri }
+func (c MongoDBConfig) Database() string { return c.database }
