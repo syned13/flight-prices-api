@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"sync"
 )
 
@@ -21,11 +22,18 @@ type AppConfig struct {
 	serpAPI   SerpAPIConfig
 	jwt       JWTConfig
 	mongo     MongoDBConfig
+	redis     RedisConfig
 }
 
 type MongoDBConfig struct {
 	uri      string
 	database string
+}
+
+type RedisConfig struct {
+	uri               string
+	password          string
+	cacheTTLInSeconds int
 }
 
 type AmadeusConfig struct {
@@ -77,6 +85,11 @@ func GetConfig() *AppConfig {
 				uri:      getEnvOrDefault("MONGO_URI", ""),
 				database: getEnvOrDefault("MONGO_DATABASE", "flight-prices"),
 			},
+			redis: RedisConfig{
+				uri:               getEnvOrDefault("REDIS_URI", ""),
+				password:          getEnvOrDefault("REDIS_PASSWORD", ""),
+				cacheTTLInSeconds: getIntEnvOrDefault("REDIS_CACHE_TTL_IN_SECONDS", 30),
+			},
 		}
 	})
 	return instance
@@ -105,6 +118,19 @@ func getEnvOrDefault(key, defaultValue string) string {
 	if value := os.Getenv(key); value != "" {
 		return value
 	}
+	return defaultValue
+}
+
+func getIntEnvOrDefault(key string, defaultValue int) int {
+	if value := os.Getenv(key); value != "" {
+		parsedValue, err := strconv.Atoi(value)
+		if err != nil {
+			return defaultValue
+		}
+
+		return parsedValue
+	}
+
 	return defaultValue
 }
 
@@ -146,3 +172,9 @@ func (c *AppConfig) Mongo() MongoDBConfig { return c.mongo }
 
 func (c MongoDBConfig) URI() string      { return c.uri }
 func (c MongoDBConfig) Database() string { return c.database }
+
+func (c *AppConfig) Redis() RedisConfig { return c.redis }
+
+func (c RedisConfig) URI() string            { return c.uri }
+func (c RedisConfig) Password() string       { return c.password }
+func (c RedisConfig) CacheTTLInSeconds() int { return c.cacheTTLInSeconds }

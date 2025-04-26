@@ -12,6 +12,7 @@ services:
       - flight-prices-net
     depends_on:
       - mongo
+      - redis
   mongo:
     image: mongo:latest
     ports:
@@ -23,7 +24,19 @@ services:
       - flight-prices-net
     volumes:
       - mongodb_data:/data/db
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - flight-prices-net
+    volumes:
+      - redis_data:/data
+    environment:
+      REDIS_PASSWORD: flightredis123
+    command: ["redis-server", "--requirepass", "flightredis123"]
 networks:
   flight-prices-net:
 volumes:
   mongodb_data:
+  redis_data:

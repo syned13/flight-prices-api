@@ -9,6 +9,7 @@ import (
 	"sync"
 
 	"github.com/syned13/flight-prices-api/internal/models"
+	flight_prices "github.com/syned13/flight-prices-api/internal/repository/itinerary-cache"
 	"github.com/syned13/flight-prices-api/internal/services/clients"
 )
 
@@ -20,9 +21,10 @@ type itineraryFetcherService struct {
 	amadeusClient   clients.ItineraryFetcherClient
 	flightAPIClient clients.ItineraryFetcherClient
 	serpAPIClient   clients.ItineraryFetcherClient
+	cache           flight_prices.ItineraryCache
 }
 
-func NewItineraryFetcherService() ItineraryFetcherService {
+func NewItineraryFetcherService(cache flight_prices.ItineraryCache) ItineraryFetcherService {
 	clientFactory := clients.NewClientFactory()
 	amadeusClient := clientFactory.NewItineraryFetcherClient(clients.Amadeus)
 	flightAPIClient := clientFactory.NewItineraryFetcherClient(clients.FlightAPI)
@@ -32,10 +34,25 @@ func NewItineraryFetcherService() ItineraryFetcherService {
 		amadeusClient:   amadeusClient,
 		flightAPIClient: flightAPIClient,
 		serpAPIClient:   serpAPIClient,
+		cache:           cache,
 	}
 }
 
 func (s *itineraryFetcherService) FetchItineraries(ctx context.Context, request models.FlightSearchRequest) (*models.FlightSearchResponse, error) {
+	// Try cache first
+	if s.cache != nil {
+		if cached, err := s.cache.GetItineraries(ctx, request); err == nil && len(cached) > 0 {
+			log.Printf("Cache hit for request")
+			sortedByPrice := sortItinerariesByPrice(cached)
+			sortedByDuration := sortItinerariesByDuration(cached)
+			return &models.FlightSearchResponse{
+				Itineraries: cached,
+				Cheapest:    sortedByPrice[0],
+				Fastest:     sortedByDuration[0],
+			}, nil
+		}
+	}
+
 	itineraries, err := s.fetchItineraries(ctx, request)
 	if err != nil {
 		return nil, err
@@ -43,6 +60,14 @@ func (s *itineraryFetcherService) FetchItineraries(ctx context.Context, request 
 
 	if len(itineraries) == 0 {
 		return nil, errors.New("no itineraries found")
+	}
+
+	// Save to cache
+	if s.cache != nil {
+		err = s.cache.SaveItineraries(ctx, request, itineraries)
+		if err != nil {
+			log.Printf("Error saving itineraries to cache: %v", err)
+		}
 	}
 
 	sortedByPrice := sortItinerariesByPrice(itineraries)

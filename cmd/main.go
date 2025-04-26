@@ -6,9 +6,11 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/go-redis/redis/v8"
 	"github.com/gorilla/mux"
 	"github.com/syned13/flight-prices-api/internal/controllers"
 	"github.com/syned13/flight-prices-api/internal/repository/auth"
+	flight_prices "github.com/syned13/flight-prices-api/internal/repository/itinerary-cache"
 	auth_service "github.com/syned13/flight-prices-api/internal/services/auth"
 	itinerary_fetcher "github.com/syned13/flight-prices-api/internal/services/itinerary-fetcher"
 	"github.com/syned13/flight-prices-api/pkg/config"
@@ -27,15 +29,33 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to connect to mongo: %v", err)
 	}
-
 	defer mongoClient.Disconnect(ctx)
+
+	// Initialize Redis client
+	redisAddr := appConfig.Redis().URI()
+	if redisAddr == "" {
+		log.Fatalf("failed to get redis address")
+	}
+
+	redisPassword := appConfig.Redis().Password()
+	if redisPassword == "" {
+		log.Fatalf("failed to get redis password")
+	}
+
+	redisClient := redis.NewClient(&redis.Options{
+		Addr:     redisAddr,
+		Password: redisPassword,
+		DB:       0,
+	})
+
+	cacheRepo := flight_prices.NewItineraryCache(redisClient)
 
 	// Initialize repositories
 	authRepository := auth.NewAuthRepository(mongoClient)
 
 	// Initialize services
 	authService := auth_service.NewAuthService(authRepository)
-	itineraryFetcherService := itinerary_fetcher.NewItineraryFetcherService()
+	itineraryFetcherService := itinerary_fetcher.NewItineraryFetcherService(cacheRepo)
 
 	router := mux.NewRouter()
 
