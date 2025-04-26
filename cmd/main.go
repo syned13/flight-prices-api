@@ -45,7 +45,6 @@ func main() {
 	}
 	defer mongoClient.Disconnect(ctx)
 
-	// Initialize Redis client
 	redisAddr := appConfig.Redis().URI()
 	if redisAddr == "" {
 		log.Fatalf("failed to get redis address")
@@ -79,7 +78,6 @@ func main() {
 		w.Write([]byte("ok"))
 	}).Methods("GET")
 
-	// Initialize controllers
 	authController := controllers.NewAuthController(router, authService)
 	flightSearchController := controllers.NewFlightSearchController(router, itineraryFetcherService)
 
