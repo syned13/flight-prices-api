@@ -2,6 +2,8 @@ package itinerary_fetcher
 
 import (
 	"context"
+	"errors"
+	"sort"
 	"sync"
 
 	"github.com/syned13/flight-prices-api/internal/models"
@@ -9,7 +11,7 @@ import (
 )
 
 type ItineraryFetcherService interface {
-	FetchItineraries(ctx context.Context, request models.FlightSearchRequest) ([]models.Itinerary, error)
+	FetchItineraries(ctx context.Context, request models.FlightSearchRequest) (*models.FlightSearchResponse, error)
 }
 
 type itineraryFetcherService struct {
@@ -31,7 +33,30 @@ func NewItineraryFetcherService() ItineraryFetcherService {
 	}
 }
 
-func (s *itineraryFetcherService) FetchItineraries(ctx context.Context, request models.FlightSearchRequest) ([]models.Itinerary, error) {
+func (s *itineraryFetcherService) FetchItineraries(ctx context.Context, request models.FlightSearchRequest) (*models.FlightSearchResponse, error) {
+	itineraries, err := s.fetchItineraries(ctx, request)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(itineraries) == 0 {
+		return nil, errors.New("no itineraries found")
+	}
+
+	sortedByPrice := sortItinerariesByPrice(itineraries)
+	sortedByDuration := sortItinerariesByDuration(itineraries)
+
+	cheapest := sortedByPrice[0]
+	fastest := sortedByDuration[0]
+
+	return &models.FlightSearchResponse{
+		Itineraries: itineraries,
+		Cheapest:    cheapest,
+		Fastest:     fastest,
+	}, nil
+}
+
+func (s *itineraryFetcherService) fetchItineraries(ctx context.Context, request models.FlightSearchRequest) ([]models.Itinerary, error) {
 	type result struct {
 		itineraries []models.Itinerary
 		err         error
@@ -73,4 +98,19 @@ func (s *itineraryFetcherService) FetchItineraries(ctx context.Context, request 
 	}
 
 	return allItineraries, nil
+}
+
+func sortItinerariesByPrice(itineraries []models.Itinerary) []models.Itinerary {
+	sort.Slice(itineraries, func(i, j int) bool {
+		return itineraries[i].Price.Total < itineraries[j].Price.Total
+	})
+	return itineraries
+}
+
+func sortItinerariesByDuration(itineraries []models.Itinerary) []models.Itinerary {
+	sort.Slice(itineraries, func(i, j int) bool {
+		return itineraries[i].Duration < itineraries[j].Duration
+	})
+
+	return itineraries
 }

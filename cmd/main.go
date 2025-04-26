@@ -19,8 +19,25 @@ func getAppConfig() (*config.AppConfig, error) {
 		return nil, errors.New("HTTP_PORT is not set")
 	}
 
+	amadeusConfig := config.AmadeusConfig{
+		APIKey:  os.Getenv("AMADEUS_API_KEY"),
+		BaseURL: os.Getenv("AMADEUS_BASE_URL"),
+	}
+	flightAPIConfig := config.FlightAPIConfig{
+		APIKey:  os.Getenv("FLIGHT_API_KEY"),
+		BaseURL: os.Getenv("FLIGHT_API_BASE_URL"),
+	}
+
+	serpAPIConfig := config.SerpAPIConfig{
+		APIKey:  os.Getenv("SERP_API_KEY"),
+		BaseURL: os.Getenv("SERP_API_BASE_URL"),
+	}
+
 	return &config.AppConfig{
-		HttpPort: port,
+		HttpPort:  port,
+		Amadeus:   amadeusConfig,
+		FlightAPI: flightAPIConfig,
+		SerpAPI:   serpAPIConfig,
 	}, nil
 }
 
