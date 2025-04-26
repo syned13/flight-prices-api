@@ -8,6 +8,8 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/syned13/flight-prices-api/internal/controllers"
+	itinerary_fetcher "github.com/syned13/flight-prices-api/internal/services/itinerary-fetcher"
 	"github.com/syned13/flight-prices-api/pkg/config"
 )
 
@@ -30,10 +32,9 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Hello, World!"))
-	})
+	itineraryFetcherService := itinerary_fetcher.NewItineraryFetcherService()
+	flightSearchController := controllers.NewFlightSearchController(router, itineraryFetcherService)
+	flightSearchController.RegisterRoutes()
 
 	log.Printf("Starting server on port %s", appConfig.HttpPort)
 	err = http.ListenAndServe(fmt.Sprintf(":%s", appConfig.HttpPort), router)
