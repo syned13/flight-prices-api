@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flight Prices API Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        input, button { margin: 0.2em; }
+        .section { margin-bottom: 2em; }
+        pre { background: #f4f4f4; padding: 1em; }
+    </style>
+</head>
+<body>
+    <h1>Flight Prices API Demo</h1>
+
+    <div class="section">
+        <h2>Register</h2>
+        <input id="reg-username" placeholder="Username">
+        <input id="reg-password" type="password" placeholder="Password">
+        <button onclick="register()">Register</button>
+        <div id="register-result"></div>
+    </div>
+
+    <div class="section">
+        <h2>Login</h2>
+        <input id="login-username" placeholder="Username">
+        <input id="login-password" type="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <div id="login-result"></div>
+    </div>
+
+    <div class="section">
+        <h2>Search Flights</h2>
+        <input id="origin" placeholder="Origin (e.g. SDQ)">
+        <input id="destination" placeholder="Destination (e.g. JFK)">
+        <input id="date" type="date" placeholder="Departure Date">
+        <button onclick="searchFlights()">Search</button>
+        <div id="search-result"></div>
+    </div>
+
+    <script>
+    let token = '';
+
+    function register() {
+        const username = document.getElementById('reg-username').value;
+        const password = document.getElementById('reg-password').value;
+        fetch('http://localhost:8080/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        })
+        .then(r => {
+            if (r.status === 201) return 'Registration successful!';
+            return r.text();
+        })
+        .then(msg => {
+            document.getElementById('register-result').innerText = msg;
+        });
+    }
+
+    function login() {
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+        fetch('http://localhost:8080/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.token) {
+                token = data.token;
+                document.getElementById('login-result').innerText = 'Login successful!';
+            } else {
+                document.getElementById('login-result').innerText = data.error || 'Login failed.';
+            }
+        })
+        .catch(() => {
+            document.getElementById('login-result').innerText = 'Login failed.';
+        });
+    }
+
+    function searchFlights() {
+        const origin = document.getElementById('origin').value;
+        const destination = document.getElementById('destination').value;
+        const date = document.getElementById('date').value;
+        if (!token) {
+            document.getElementById('search-result').innerText = 'Please login first.';
+            return;
+        }
+        fetch('http://localhost:8080/flights/search?origin=' + origin + '&destination=' + destination + '&date=' + date, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (!data.itineraries || !Array.isArray(data.itineraries)) {
+                document.getElementById('search-result').innerText = 'No itineraries found.';
+                return;
+            }
+            let html = '';
+            // Show Cheapest
+            if (data.cheapest) {
+                html += `<div style="border:2px solid #4caf50; margin:8px 0; padding:8px; background:#e8f5e9;">
+                    <strong>Cheapest</strong><br>
+                    <b>Price:</b> ${data.cheapest.price.total} ${data.cheapest.price.currency}<br>
+                    <b>Duration:</b> ${data.cheapest.durationInMinutes} min<br>
+                    <b>Stops:</b> ${data.cheapest.stops}<br>
+                    <b>Segments:</b>
+                    <ul style="margin:0; padding-left:18px;">
+                        ${data.cheapest.segments.map(seg => `
+                            <li>
+                                <b>${seg.airline}</b> ${seg.number} (${seg.origin} → ${seg.destination})<br>
+                                <small>Dep: ${seg.departureTime} | Arr: ${seg.arrivalTime}</small>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>`;
+            }
+            // Show Fastest
+            if (data.fastest) {
+                html += `<div style="border:2px solid #2196f3; margin:8px 0; padding:8px; background:#e3f2fd;">
+                    <strong>Fastest</strong><br>
+                    <b>Price:</b> ${data.fastest.price.total} ${data.fastest.price.currency}<br>
+                    <b>Duration:</b> ${data.fastest.durationInMinutes} min<br>
+                    <b>Stops:</b> ${data.fastest.stops}<br>
+                    <b>Segments:</b>
+                    <ul style="margin:0; padding-left:18px;">
+                        ${data.fastest.segments.map(seg => `
+                            <li>
+                                <b>${seg.airline}</b> ${seg.number} (${seg.origin} → ${seg.destination})<br>
+                                <small>Dep: ${seg.departureTime} | Arr: ${seg.arrivalTime}</small>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>`;
+            }
+            // List all itineraries
+            data.itineraries.forEach((itin, idx) => {
+                html += `<div style="border:1px solid #ccc; margin:8px 0; padding:8px;">
+                    <strong>Itinerary #${idx + 1}</strong><br>
+                    <b>Price:</b> ${itin.price.total} ${itin.price.currency}<br>
+                    <b>Duration:</b> ${itin.durationInMinutes} min<br>
+                    <b>Stops:</b> ${itin.stops}<br>
+                    <b>Segments:</b>
+                    <ul style="margin:0; padding-left:18px;">
+                        ${itin.segments.map(seg => `
+                            <li>
+                                <b>${seg.airline}</b> ${seg.number} (${seg.origin} → ${seg.destination})<br>
+                                <small>Dep: ${seg.departureTime} | Arr: ${seg.arrivalTime}</small>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>`;
+            });
+            document.getElementById('search-result').innerHTML = html;
+        })
+        .catch((e) => {
+            console.error('Search failed.', e);
+            document.getElementById('search-result').innerText = 'Search failed.';
+        });
+    }
+    </script>
+</body>
+</html> 

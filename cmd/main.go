@@ -18,6 +18,20 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// CORS middleware for development (allow all)
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
 func main() {
 	appConfig := config.GetConfig()
 	if err := appConfig.Validate(); err != nil {
@@ -69,12 +83,15 @@ func main() {
 	authController := controllers.NewAuthController(router, authService)
 	flightSearchController := controllers.NewFlightSearchController(router, itineraryFetcherService)
 
-	// Register routes
 	authController.RegisterRoutes()
 	flightSearchController.RegisterRoutes()
 
+	// Serve static files from ./static at /
+	staticFileServer := http.FileServer(http.Dir("./static"))
+	router.PathPrefix("/").Handler(staticFileServer)
+
 	log.Printf("Starting server on port %s", appConfig.HTTPPort())
-	err = http.ListenAndServe(fmt.Sprintf(":%s", appConfig.HTTPPort()), router)
+	err = http.ListenAndServe(fmt.Sprintf(":%s", appConfig.HTTPPort()), corsMiddleware(router))
 	if err != nil {
 		log.Fatalf("failed to start server: %v", err)
 	}
