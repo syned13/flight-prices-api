@@ -1,11 +1,293 @@
 {
     "httpRequest": {
         "method": "GET",
-        "path": "/flights/search"
+        "path": "/onewaytrip/.*"
     },
     "httpResponse": {
-        "statusCode": 200
-    },
-    "body": "{\r\n  \"itineraries\": [\r\n    {\r\n      \"id\": \"2000-2505050600--20005-1-3000-2505051602|3000-2505120715--20005-1-2000-2505121515\",\r\n      \"leg_ids\": [\r\n        \"2000-2505050600--20005-1-3000-2505051602\",\r\n        \"3000-2505120715--20005-1-2000-2505121515\"\r\n      ],\r\n      \"pricing_options\": [\r\n        {\r\n          \"id\": \"PRC-NK-310\",\r\n          \"agent_ids\": [\"spirit\"],\r\n          \"price\": {\r\n            \"amount\": 310.0,\r\n            \"update_status\": \"current\",\r\n            \"last_updated\": \"2025-04-25T00:10:00\",\r\n            \"quote_age\": 1\r\n          },\r\n          \"unpriced_type\": \"\",\r\n          \"items\": [\r\n            {\r\n              \"agent_id\": \"spirit\",\r\n              \"url\": \"https:\/\/www.spirit.com\/book?it=SDQ-FLL-2505050600;FLL-JFK-2505051305;JFK-FLL-2505120715;FLL-SDQ-2505121235\",\r\n              \"segment_ids\": [\r\n                \"2000-4000-2505050600-2505050845--20005\",\r\n                \"4000-3000-2505051305-2505051602--20005\",\r\n                \"3000-4000-2505120715-2505121010--20005\",\r\n                \"4000-2000-2505121235-2505121515--20005\"\r\n              ],\r\n              \"price\": {\r\n                \"amount\": 310.0,\r\n                \"update_status\": \"current\",\r\n                \"last_updated\": \"2025-04-25T00:10:00\",\r\n                \"quote_age\": 1\r\n              },\r\n              \"booking_proposition\": \"PBOOK\",\r\n              \"transfer_protection\": \"\",\r\n              \"max_redirect_age\": 10,\r\n              \"fares\": [\r\n                {\r\n                  \"segment_id\": \"2000-4000-2505050600-2505050845--20005\",\r\n                  \"fare_basis_code\": \"NKLLBF\",\r\n                  \"booking_code\": \"L\",\r\n                  \"fare_family\": \"BARE FARE\"\r\n                },\r\n                {\r\n                  \"segment_id\": \"4000-3000-2505051305-2505051602--20005\",\r\n                  \"fare_basis_code\": \"NKLLBF\",\r\n                  \"booking_code\": \"L\",\r\n                  \"fare_family\": \"BARE FARE\"\r\n                },\r\n                {\r\n                  \"segment_id\": \"3000-4000-2505120715-2505121010--20005\",\r\n                  \"fare_basis_code\": \"NKLLBF\",\r\n                  \"booking_code\": \"L\",\r\n                  \"fare_family\": \"BARE FARE\"\r\n                },\r\n                {\r\n                  \"segment_id\": \"4000-2000-2505121235-2505121515--20005\",\r\n                  \"fare_basis_code\": \"NKLLBF\",\r\n                  \"booking_code\": \"L\",\r\n                  \"fare_family\": \"BARE FARE\"\r\n                }\r\n              ],\r\n              \"opaque_id\": \"NK1462924\",\r\n              \"booking_metadata\": {\r\n                \"metadata_set\": \"\",\r\n                \"signature\": \"\"\r\n              },\r\n              \"ticket_attributes\": [],\r\n              \"flight_attributes\": []\r\n            }\r\n          ],\r\n          \"transfer_type\": \"MANAGED\",\r\n          \"score\": 3.90,\r\n          \"pricing_option_fare\": {\r\n            \"attribute_labels\": [],\r\n            \"leg_details\": {},\r\n            \"brand_names\": []\r\n          }\r\n        }\r\n      ],\r\n      \"score\": 3.88,\r\n      \"cheapest_price\": {\r\n        \"amount\": 310.0,\r\n        \"update_status\": \"current\",\r\n        \"last_updated\": \"2025-04-25T00:10:00\",\r\n        \"quote_age\": 1\r\n      },\r\n      \"pricing_options_count\": 1\r\n    },\r\n    {\r\n      \"id\": \"2000-2505050825--20006-1-3000-2505051505|3000-2505121625--20006-1-2000-2505122330\",\r\n      \"leg_ids\": [\r\n        \"2000-2505050825--20006-1-3000-2505051505\",\r\n        \"3000-2505121625--20006-1-2000-2505122330\"\r\n      ],\r\n      \"pricing_options\": [\r\n        {\r\n          \"id\": \"PRC-F9-365\",\r\n          \"agent_ids\": [\"frontier\"],\r\n          \"price\": {\r\n            \"amount\": 365.0,\r\n            \"update_status\": \"current\",\r\n            \"last_updated\": \"2025-04-25T00:11:00\",\r\n            \"quote_age\": 1\r\n          },\r\n          \"unpriced_type\": \"\",\r\n          \"items\": [\r\n            {\r\n              \"agent_id\": \"frontier\",\r\n              \"url\": \"https:\/\/www.flyfrontier.com\/book?it=SDQ-MCO-2505050825;MCO-JFK-2505051240;JFK-MCO-2505121625;MCO-SDQ-2505122045\",\r\n              \"segment_ids\": [\r\n                \"2000-6000-2505050825-2505051100--20006\",\r\n                \"6000-3000-2505051240-2505051505--20006\",\r\n                \"3000-6000-2505121625-2505121900--20006\",\r\n                \"6000-2000-2505122045-2505122330--20006\"\r\n              ],\r\n              \"price\": {\r\n                \"amount\": 365.0,\r\n                \"update_status\": \"current\",\r\n                \"last_updated\": \"2025-04-25T00:11:00\",\r\n                \"quote_age\": 1\r\n              },\r\n              \"booking_proposition\": \"PBOOK\",\r\n              \"transfer_protection\": \"\",\r\n              \"max_redirect_age\": 10,\r\n              \"fares\": [\r\n                {\r\n                  \"segment_id\": \"2000-6000-2505050825-2505051100--20006\",\r\n                  \"fare_basis_code\": \"F9XSAV\",\r\n                  \"booking_code\": \"X\",\r\n                  \"fare_family\": \"ECONOMY\"\r\n                },\r\n                {\r\n                  \"segment_id\": \"6000-3000-2505051240-2505051505--20006\",\r\n                  \"fare_basis_code\": \"F9XSAV\",\r\n                  \"booking_code\": \"X\",\r\n                  \"fare_family\": \"ECONOMY\"\r\n                },\r\n                {\r\n                  \"segment_id\": \"3000-6000-2505121625-2505121900--20006\",\r\n                  \"fare_basis_code\": \"F9XSAV\",\r\n                  \"booking_code\": \"X\",\r\n                  \"fare_family\": \"ECONOMY\"\r\n                },\r\n                {\r\n                  \"segment_id\": \"6000-2000-2505122045-2505122330--20006\",\r\n                  \"fare_basis_code\": \"F9XSAV\",\r\n                  \"booking_code\": \"X\",\r\n                  \"fare_family\": \"ECONOMY\"\r\n                }\r\n              ],\r\n              \"opaque_id\": \"F930011109\",\r\n              \"booking_metadata\": {\r\n                \"metadata_set\": \"\",\r\n                \"signature\": \"\"\r\n              },\r\n              \"ticket_attributes\": [],\r\n              \"flight_attributes\": []\r\n            }\r\n          ],\r\n          \"transfer_type\": \"MANAGED\",\r\n          \"score\": 3.45,\r\n          \"pricing_option_fare\": {\r\n            \"attribute_labels\": [],\r\n            \"leg_details\": {},\r\n            \"brand_names\": []\r\n          }\r\n        }\r\n      ],\r\n      \"score\": 3.43,\r\n      \"cheapest_price\": {\r\n        \"amount\": 365.0,\r\n        \"update_status\": \"current\",\r\n        \"last_updated\": \"2025-04-25T00:11:00\",\r\n        \"quote_age\": 1\r\n      },\r\n      \"pricing_options_count\": 1\r\n    },\r\n    {\r\n      \"id\": \"2000-2505051920--20001-0-3000-2505052315|3000-2505120530--20001-0-2000-2505120925\",\r\n      \"leg_ids\": [\r\n        \"2000-2505051920--20001-0-3000-2505052315\",\r\n        \"3000-2505120530--20001-0-2000-2505120925\"\r\n      ],\r\n      \"pricing_options\": [\r\n        {\r\n          \"id\": \"PRC-JB-560\",\r\n          \"agent_ids\": [\"jetblue\"],\r\n          \"price\": {\r\n            \"amount\": 560.0,\r\n            \"update_status\": \"current\",\r\n            \"last_updated\": \"2025-04-25T00:12:00\",\r\n            \"quote_age\": 1\r\n          },\r\n          \"unpriced_type\": \"\",\r\n          \"items\": [\r\n            {\r\n              \"agent_id\": \"jetblue\",\r\n              \"url\": \"https:\/\/www.jetblue.com\/book?it=SDQ-JFK-2505051920;JFK-SDQ-2505120530\",\r\n              \"segment_ids\": [\r\n                \"2000-3000-2505051920-2505052315--20001\",\r\n                \"3000-2000-2505120530-2505120925--20001\"\r\n              ],\r\n              \"price\": {\r\n                \"amount\": 560.0,\r\n                \"update_status\": \"current\",\r\n                \"last_updated\": \"2025-04-25T00:12:00\",\r\n                \"quote_age\": 1\r\n              },\r\n              \"booking_proposition\": \"PBOOK\",\r\n              \"transfer_protection\": \"\",\r\n              \"max_redirect_age\": 10,\r\n              \"fares\": [\r\n                {\r\n                  \"segment_id\": \"2000-3000-2505051920-2505052315--20001\",\r\n                  \"fare_basis_code\": \"JBMINT\",\r\n                  \"booking_code\": \"I\",\r\n                  \"fare_family\": \"MINT\"\r\n                },\r\n                {\r\n                  \"segment_id\": \"3000-2000-2505120530-2505120925--20001\",\r\n                  \"fare_basis_code\": \"JBMINT\",\r\n                  \"booking_code\": \"I\",\r\n                  \"fare_family\": \"MINT\"\r\n                }\r\n              ],\r\n              \"opaque_id\": \"JB247308\",\r\n              \"booking_metadata\": {\r\n                \"metadata_set\": \"\",\r\n                \"signature\": \"\"\r\n              },\r\n              \"ticket_attributes\": [],\r\n              \"flight_attributes\": []\r\n            }\r\n          ],\r\n          \"transfer_type\": \"MANAGED\",\r\n          \"score\": 4.80,\r\n          \"pricing_option_fare\": {\r\n            \"attribute_labels\": [],\r\n            \"leg_details\": {},\r\n            \"brand_names\": []\r\n          }\r\n        }\r\n      ],\r\n      \"score\": 4.78,\r\n      \"cheapest_price\": {\r\n        \"amount\": 560.0,\r\n        \"update_status\": \"current\",\r\n        \"last_updated\": \"2025-04-25T00:12:00\",\r\n        \"quote_age\": 1\r\n      },\r\n      \"pricing_options_count\": 1\r\n    }\r\n  ],\r\n  \"legs\": [\r\n    {\r\n      \"id\": \"2000-2505050600--20005-1-3000-2505051602\",\r\n      \"origin_place_id\": 2000,\r\n      \"destination_place_id\": 3000,\r\n      \"departure\": \"2025-05-05T06:00:00\",\r\n      \"arrival\": \"2025-05-05T16:02:00\",\r\n      \"segment_ids\": [\r\n        \"2000-4000-2505050600-2505050845--20005\",\r\n        \"4000-3000-2505051305-2505051602--20005\"\r\n      ],\r\n      \"duration\": 602,\r\n      \"stop_count\": 1,\r\n      \"marketing_carrier_ids\": [-20005],\r\n      \"operating_carrier_ids\": [-20005],\r\n      \"stop_ids\": [[4000]]\r\n    },\r\n    {\r\n      \"id\": \"3000-2505120715--20005-1-2000-2505121515\",\r\n      \"origin_place_id\": 3000,\r\n      \"destination_place_id\": 2000,\r\n      \"departure\": \"2025-05-12T07:15:00\",\r\n      \"arrival\": \"2025-05-12T15:15:00\",\r\n      \"segment_ids\": [\r\n        \"3000-4000-2505120715-2505121010--20005\",\r\n        \"4000-2000-2505121235-2505121515--20005\"\r\n      ],\r\n      \"duration\": 480,\r\n      \"stop_count\": 1,\r\n      \"marketing_carrier_ids\": [-20005],\r\n      \"operating_carrier_ids\": [-20005],\r\n      \"stop_ids\": [[4000]]\r\n    },\r\n    {\r\n      \"id\": \"2000-2505050825--20006-1-3000-2505051505\",\r\n      \"origin_place_id\": 2000,\r\n      \"destination_place_id\": 3000,\r\n      \"departure\": \"2025-05-05T08:25:00\",\r\n      \"arrival\": \"2025-05-05T15:05:00\",\r\n      \"segment_ids\": [\r\n        \"2000-6000-2505050825-2505051100--20006\",\r\n        \"6000-3000-2505051240-2505051505--20006\"\r\n      ],\r\n      \"duration\": 400,\r\n      \"stop_count\": 1,\r\n      \"marketing_carrier_ids\": [-20006],\r\n      \"operating_carrier_ids\": [-20006],\r\n      \"stop_ids\": [[6000]]\r\n    },\r\n    {\r\n      \"id\": \"3000-2505121625--20006-1-2000-2505122330\",\r\n      \"origin_place_id\": 3000,\r\n      \"destination_place_id\": 2000,\r\n      \"departure\": \"2025-05-12T16:25:00\",\r\n      \"arrival\": \"2025-05-12T23:30:00\",\r\n      \"segment_ids\": [\r\n        \"3000-6000-2505121625-2505121900--20006\",\r\n        \"6000-2000-2505122045-2505122330--20006\"\r\n      ],\r\n      \"duration\": 425,\r\n      \"stop_count\": 1,\r\n      \"marketing_carrier_ids\": [-20006],\r\n      \"operating_carrier_ids\": [-20006],\r\n      \"stop_ids\": [[6000]]\r\n    },\r\n    {\r\n      \"id\": \"2000-2505051920--20001-0-3000-2505052315\",\r\n      \"origin_place_id\": 2000,\r\n      \"destination_place_id\": 3000,\r\n      \"departure\": \"2025-05-05T19:20:00\",\r\n      \"arrival\": \"2025-05-05T23:15:00\",\r\n      \"segment_ids\": [\"2000-3000-2505051920-2505052315--20001\"],\r\n      \"duration\": 235,\r\n      \"stop_count\": 0,\r\n      \"marketing_carrier_ids\": [-20001],\r\n      \"operating_carrier_ids\": [-20001],\r\n      \"stop_ids\": []\r\n    },\r\n    {\r\n      \"id\": \"3000-2505120530--20001-0-2000-2505120925\",\r\n      \"origin_place_id\": 3000,\r\n      \"destination_place_id\": 2000,\r\n      \"departure\": \"2025-05-12T05:30:00\",\r\n      \"arrival\": \"2025-05-12T09:25:00\",\r\n      \"segment_ids\": [\"3000-2000-2505120530-2505120925--20001\"],\r\n      \"duration\": 235,\r\n      \"stop_count\": 0,\r\n      \"marketing_carrier_ids\": [-20001],\r\n      \"operating_carrier_ids\": [-20001],\r\n      \"stop_ids\": []\r\n    }\r\n  ],\r\n  \"segments\": [\r\n    {\r\n      \"id\": \"2000-4000-2505050600-2505050845--20005\",\r\n      \"origin_place_id\": 2000,\r\n      \"destination_place_id\": 4000,\r\n      \"departure\": \"2025-05-05T06:00:00\",\r\n      \"arrival\": \"2025-05-05T08:45:00\",\r\n      \"duration\": 165,\r\n      \"marketing_flight_number\": \"NK 146\",\r\n      \"marketing_carrier_id\": -20005,\r\n      \"operating_carrier_id\": -20005,\r\n      \"mode\": \"flight\"\r\n    },\r\n    {\r\n      \"id\": \"4000-3000-2505051305-2505051602--20005\",\r\n      \"origin_place_id\": 4000,\r\n      \"destination_place_id\": 3000,\r\n      \"departure\": \"2025-05-05T13:05:00\",\r\n      \"arrival\": \"2025-05-05T16:02:00\",\r\n      \"duration\": 177,\r\n      \"marketing_flight_number\": \"NK 2924\",\r\n      \"marketing_carrier_id\": -20005,\r\n      \"operating_carrier_id\": -20005,\r\n      \"mode\": \"flight\"\r\n    },\r\n    {\r\n      \"id\": \"3000-4000-2505120715-2505121010--20005\",\r\n      \"origin_place_id\": 3000,\r\n      \"destination_place_id\": 4000,\r\n      \"departure\": \"2025-05-12T07:15:00\",\r\n      \"arrival\": \"2025-05-12T10:10:00\",\r\n      \"duration\": 175,\r\n      \"marketing_flight_number\": \"NK 2925\",\r\n      \"marketing_carrier_id\": -20005,\r\n      \"operating_carrier_id\": -20005,\r\n      \"mode\": \"flight\"\r\n    },\r\n    {\r\n      \"id\": \"4000-2000-2505121235-2505121515--20005\",\r\n      \"origin_place_id\": 4000,\r\n      \"destination_place_id\": 2000,\r\n      \"departure\": \"2025-05-12T12:35:00\",\r\n      \"arrival\": \"2025-05-12T15:15:00\",\r\n      \"duration\": 160,\r\n      \"marketing_flight_number\": \"NK 145\",\r\n      \"marketing_carrier_id\": -20005,\r\n      \"operating_carrier_id\": -20005,\r\n      \"mode\": \"flight\"\r\n    },\r\n    {\r\n      \"id\": \"2000-6000-2505050825-2505051100--20006\",\r\n      \"origin_place_id\": 2000,\r\n      \"destination_place_id\": 6000,\r\n      \"departure\": \"2025-05-05T08:25:00\",\r\n      \"arrival\": \"2025-05-05T11:00:00\",\r\n      \"duration\": 155,\r\n      \"marketing_flight_number\": \"F9 3001\",\r\n      \"marketing_carrier_id\": -20006,\r\n      \"operating_carrier_id\": -20006,\r\n      \"mode\": \"flight\"\r\n    },\r\n    {\r\n      \"id\": \"6000-3000-2505051240-2505051505--20006\",\r\n      \"origin_place_id\": 6000,\r\n      \"destination_place_id\": 3000,\r\n      \"departure\": \"2025-05-05T12:40:00\",\r\n      \"arrival\": \"2025-05-05T15:05:00\",\r\n      \"duration\": 145,\r\n      \"marketing_flight_number\": \"F9 109\",\r\n      \"marketing_carrier_id\": -20006,\r\n      \"operating_carrier_id\": -20006,\r\n      \"mode\": \"flight\"\r\n    },\r\n    {\r\n      \"id\": \"3000-6000-2505121625-2505121900--20006\",\r\n      \"origin_place_id\": 3000,\r\n      \"destination_place_id\": 6000,\r\n      \"departure\": \"2025-05-12T16:25:00\",\r\n      \"arrival\": \"2025-05-12T19:00:00\",\r\n      \"duration\": 155,\r\n      \"marketing_flight_number\": \"F9 110\",\r\n      \"marketing_carrier_id\": -20006,\r\n      \"operating_carrier_id\": -20006,\r\n      \"mode\": \"flight\"\r\n    },\r\n    {\r\n      \"id\": \"6000-2000-2505122045-2505122330--20006\",\r\n      \"origin_place_id\": 6000,\r\n      \"destination_place_id\": 2000,\r\n      \"departure\": \"2025-05-12T20:45:00\",\r\n      \"arrival\": \"2025-05-12T23:30:00\",\r\n      \"duration\": 165,\r\n      \"marketing_flight_number\": \"F9 3002\",\r\n      \"marketing_carrier_id\": -20006,\r\n      \"operating_carrier_id\": -20006,\r\n      \"mode\": \"flight\"\r\n    },\r\n    {\r\n      \"id\": \"2000-3000-2505051920-2505052315--20001\",\r\n      \"origin_place_id\": 2000,\r\n      \"destination_place_id\": 3000,\r\n      \"departure\": \"2025-05-05T19:20:00\",\r\n      \"arrival\": \"2025-05-05T23:15:00\",\r\n      \"duration\": 235,\r\n      \"marketing_flight_number\": \"B6 247\",\r\n      \"marketing_carrier_id\": -20001,\r\n      \"operating_carrier_id\": -20001,\r\n      \"mode\": \"flight\"\r\n    },\r\n    {\r\n      \"id\": \"3000-2000-2505120530-2505120925--20001\",\r\n      \"origin_place_id\": 3000,\r\n      \"destination_place_id\": 2000,\r\n      \"departure\": \"2025-05-12T05:30:00\",\r\n      \"arrival\": \"2025-05-12T09:25:00\",\r\n      \"duration\": 235,\r\n      \"marketing_flight_number\": \"B6 308\",\r\n      \"marketing_carrier_id\": -20001,\r\n      \"operating_carrier_id\": -20001,\r\n      \"mode\": \"flight\"\r\n    }\r\n  ]\r\n}"
-
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": ["application/json"]
+        },
+        "body": {
+            "itineraries": [
+                {
+                    "id": "itin1",
+                    "leg_ids": ["leg1"],
+                    "pricing_options": [
+                        {
+                            "price": {
+                                "amount": 310.0,
+                                "update_status": "current",
+                                "last_updated": "2025-04-25T00:10:00"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "itin2",
+                    "leg_ids": ["leg2"],
+                    "pricing_options": [
+                        {
+                            "price": {
+                                "amount": 365.0,
+                                "update_status": "current",
+                                "last_updated": "2025-04-25T00:11:00"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "itin3",
+                    "leg_ids": ["leg3"],
+                    "pricing_options": [
+                        {
+                            "price": {
+                                "amount": 560.0,
+                                "update_status": "current",
+                                "last_updated": "2025-04-25T00:12:00"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "itin4",
+                    "leg_ids": ["leg4"],
+                    "pricing_options": [
+                        {
+                            "price": {
+                                "amount": 425.50,
+                                "update_status": "current",
+                                "last_updated": "2025-04-25T00:13:00"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "itin5",
+                    "leg_ids": ["leg5"],
+                    "pricing_options": [
+                        {
+                            "price": {
+                                "amount": 495.75,
+                                "update_status": "current",
+                                "last_updated": "2025-04-25T00:14:00"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "itin6",
+                    "leg_ids": ["leg6"],
+                    "pricing_options": [
+                        {
+                            "price": {
+                                "amount": 585.25,
+                                "update_status": "current",
+                                "last_updated": "2025-04-25T00:15:00"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "itin7",
+                    "leg_ids": ["leg7"],
+                    "pricing_options": [
+                        {
+                            "price": {
+                                "amount": 675.00,
+                                "update_status": "current",
+                                "last_updated": "2025-04-25T00:16:00"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "legs": [
+                {
+                    "id": "leg1",
+                    "departure": "2025-05-05T06:00:00Z",
+                    "arrival": "2025-05-05T10:45:00Z",
+                    "duration": 285,
+                    "stop_count": 1,
+                    "segment_ids": ["seg1", "seg2"]
+                },
+                {
+                    "id": "leg2",
+                    "departure": "2025-05-05T08:25:00Z",
+                    "arrival": "2025-05-05T15:05:00Z",
+                    "duration": 400,
+                    "stop_count": 1,
+                    "segment_ids": ["seg3", "seg4"]
+                },
+                {
+                    "id": "leg3",
+                    "departure": "2025-05-05T19:20:00Z",
+                    "arrival": "2025-05-05T23:15:00Z",
+                    "duration": 235,
+                    "stop_count": 0,
+                    "segment_ids": ["seg5"]
+                },
+                {
+                    "id": "leg4",
+                    "departure": "2025-05-05T07:30:00Z",
+                    "arrival": "2025-05-05T14:15:00Z",
+                    "duration": 405,
+                    "stop_count": 1,
+                    "segment_ids": ["seg6", "seg7"]
+                },
+                {
+                    "id": "leg5",
+                    "departure": "2025-05-05T11:45:00Z",
+                    "arrival": "2025-05-05T19:30:00Z",
+                    "duration": 465,
+                    "stop_count": 2,
+                    "segment_ids": ["seg8", "seg9", "seg10"]
+                },
+                {
+                    "id": "leg6",
+                    "departure": "2025-05-05T15:20:00Z",
+                    "arrival": "2025-05-05T20:45:00Z",
+                    "duration": 325,
+                    "stop_count": 1,
+                    "segment_ids": ["seg11", "seg12"]
+                },
+                {
+                    "id": "leg7",
+                    "departure": "2025-05-05T16:30:00Z",
+                    "arrival": "2025-05-05T22:15:00Z",
+                    "duration": 345,
+                    "stop_count": 1,
+                    "segment_ids": ["seg13", "seg14"]
+                }
+            ],
+            "segments": [
+                {
+                    "id": "seg1",
+                    "departure": "2025-05-05T06:00:00Z",
+                    "arrival": "2025-05-05T08:45:00Z",
+                    "duration": 165,
+                    "marketing_flight_number": "NK146",
+                    "marketing_carrier_id": 20005,
+                    "operating_carrier_id": 20005
+                },
+                {
+                    "id": "seg2",
+                    "departure": "2025-05-05T09:15:00Z",
+                    "arrival": "2025-05-05T10:45:00Z",
+                    "duration": 90,
+                    "marketing_flight_number": "NK924",
+                    "marketing_carrier_id": 20005,
+                    "operating_carrier_id": 20005
+                },
+                {
+                    "id": "seg3",
+                    "departure": "2025-05-05T08:25:00Z",
+                    "arrival": "2025-05-05T11:00:00Z",
+                    "duration": 155,
+                    "marketing_flight_number": "F9301",
+                    "marketing_carrier_id": 20006,
+                    "operating_carrier_id": 20006
+                },
+                {
+                    "id": "seg4",
+                    "departure": "2025-05-05T12:40:00Z",
+                    "arrival": "2025-05-05T15:05:00Z",
+                    "duration": 145,
+                    "marketing_flight_number": "F9109",
+                    "marketing_carrier_id": 20006,
+                    "operating_carrier_id": 20006
+                },
+                {
+                    "id": "seg5",
+                    "departure": "2025-05-05T19:20:00Z",
+                    "arrival": "2025-05-05T23:15:00Z",
+                    "duration": 235,
+                    "marketing_flight_number": "B6247",
+                    "marketing_carrier_id": 20001,
+                    "operating_carrier_id": 20001
+                },
+                {
+                    "id": "seg6",
+                    "departure": "2025-05-05T07:30:00Z",
+                    "arrival": "2025-05-05T10:15:00Z",
+                    "duration": 165,
+                    "marketing_flight_number": "AA1234",
+                    "marketing_carrier_id": 20002,
+                    "operating_carrier_id": 20002
+                },
+                {
+                    "id": "seg7",
+                    "departure": "2025-05-05T11:45:00Z",
+                    "arrival": "2025-05-05T14:15:00Z",
+                    "duration": 150,
+                    "marketing_flight_number": "AA789",
+                    "marketing_carrier_id": 20002,
+                    "operating_carrier_id": 20002
+                },
+                {
+                    "id": "seg8",
+                    "departure": "2025-05-05T11:45:00Z",
+                    "arrival": "2025-05-05T13:30:00Z",
+                    "duration": 105,
+                    "marketing_flight_number": "UA401",
+                    "marketing_carrier_id": 20003,
+                    "operating_carrier_id": 20003
+                },
+                {
+                    "id": "seg9",
+                    "departure": "2025-05-05T15:00:00Z",
+                    "arrival": "2025-05-05T17:15:00Z",
+                    "duration": 135,
+                    "marketing_flight_number": "UA725",
+                    "marketing_carrier_id": 20003,
+                    "operating_carrier_id": 20003
+                },
+                {
+                    "id": "seg10",
+                    "departure": "2025-05-05T18:00:00Z",
+                    "arrival": "2025-05-05T19:30:00Z",
+                    "duration": 90,
+                    "marketing_flight_number": "UA892",
+                    "marketing_carrier_id": 20003,
+                    "operating_carrier_id": 20003
+                },
+                {
+                    "id": "seg11",
+                    "departure": "2025-05-05T15:20:00Z",
+                    "arrival": "2025-05-05T17:45:00Z",
+                    "duration": 145,
+                    "marketing_flight_number": "DL552",
+                    "marketing_carrier_id": 20004,
+                    "operating_carrier_id": 20004
+                },
+                {
+                    "id": "seg12",
+                    "departure": "2025-05-05T18:30:00Z",
+                    "arrival": "2025-05-05T20:45:00Z",
+                    "duration": 135,
+                    "marketing_flight_number": "DL881",
+                    "marketing_carrier_id": 20004,
+                    "operating_carrier_id": 20004
+                },
+                {
+                    "id": "seg13",
+                    "departure": "2025-05-05T16:30:00Z",
+                    "arrival": "2025-05-05T19:15:00Z",
+                    "duration": 165,
+                    "marketing_flight_number": "WN1478",
+                    "marketing_carrier_id": 20007,
+                    "operating_carrier_id": 20007
+                },
+                {
+                    "id": "seg14",
+                    "departure": "2025-05-05T20:00:00Z",
+                    "arrival": "2025-05-05T22:15:00Z",
+                    "duration": 135,
+                    "marketing_flight_number": "WN2391",
+                    "marketing_carrier_id": 20007,
+                    "operating_carrier_id": 20007
+                }
+            ]
+        }
+    }
 }

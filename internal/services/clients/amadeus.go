@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 
@@ -105,6 +106,22 @@ func (c *AmadeusClient) authenticate(ctx context.Context) error {
 	return nil
 }
 
+func parseDuration(isoDuration string) int {
+	// Remove PT prefix
+	d := strings.TrimPrefix(isoDuration, "PT")
+
+	hours, minutes := 0, 0
+	if hIndex := strings.Index(d, "H"); hIndex != -1 {
+		hours, _ = strconv.Atoi(d[:hIndex])
+		d = d[hIndex+1:]
+	}
+	if mIndex := strings.Index(d, "M"); mIndex != -1 {
+		minutes, _ = strconv.Atoi(d[:mIndex])
+	}
+
+	return hours*60 + minutes
+}
+
 func (c *AmadeusClient) FetchItineraries(ctx context.Context, request models.FlightSearchRequest) ([]models.Itinerary, error) {
 	if c.accessToken == "" {
 		if err := c.authenticate(ctx); err != nil {
@@ -175,8 +192,8 @@ func (c *AmadeusClient) FetchItineraries(ctx context.Context, request models.Fli
 					Currency: data.Price.Currency,
 					Total:    data.Price.Total,
 				},
-				Duration: itin.Duration,
-				Stops:    len(itin.Segments) - 1,
+				DurationInMinutes: parseDuration(itin.Duration),
+				Stops:             len(itin.Segments) - 1,
 			}
 
 			for _, seg := range itin.Segments {

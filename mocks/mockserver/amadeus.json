@@ -1,16 +1,165 @@
-{
-    "httpRequest": {
-        "method": "POST",
-        "path": "/shopping/flight-offers",
-        "headers": [
-            {
-                "name": "Content-Type",
-                "values": ["application/json"]
+[
+    {
+        "httpRequest": {
+            "method": "POST",
+            "path": "/security/oauth2/token",
+            "headers": {
+                "Content-Type": ["application/x-www-form-urlencoded"]
             }
-        ]
+        },
+        "httpResponse": {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": ["application/json"]
+            },
+            "body": {
+                "access_token": "mock-token-12345",
+                "expires_in": 1800
+            }
+        }
     },
-    "httpResponse": {
-        "body": "{\"meta\": {\"count\": 2}, \"data\": [{ \"type\": \"flight-offer\", \"id\": \"1\", \"source\": \"GDS\", \"instantTicketingRequired\": false, \"nonHomogeneous\": false, \"oneWay\": false, \"lastTicketingDate\": \"2025-05-01\", \"numberOfBookableSeats\": 9, \"itineraries\": [{ \"duration\": \"PT4H5M\", \"segments\": [{ \"departure\": { \"iataCode\": \"SDQ\", \"at\": \"2025-05-15T02:20:00\" }, \"arrival\": { \"iataCode\": \"JFK\", \"at\": \"2025-05-15T06:25:00\" }, \"carrierCode\": \"B6\", \"number\": \"236\", \"aircraft\": { \"code\": \"320\" }, \"operating\": { \"carrierCode\": \"B6\" }, \"duration\": \"PT4H5M\", \"id\": \"1\", \"numberOfStops\": 0, \"blacklistedInEU\": false }] }] ,\"price\": { \"currency\": \"USD\", \"total\": \"365.00\", \"base\": \"315.00\", \"fees\": [{ \"amount\": \"0.00\", \"type\": \"SUPPLIER\" }, { \"amount\": \"0.00\", \"type\": \"TICKETING\" }] ,\"grandTotal\": \"365.00\" }, \"pricingOptions\": { \"fareType\": [ \"PUBLISHED\" ], \"includedCheckedBagsOnly\": true }, \"validatingAirlineCodes\": [ \"B6\" ], \"travelerPricings\": [{ \"travelerId\": \"1\", \"fareOption\": \"STANDARD\", \"travelerType\": \"ADULT\", \"price\": { \"currency\": \"USD\", \"total\": \"365.00\", \"base\": \"315.00\" }, \"fareDetailsBySegment\": [{ \"segmentId\": \"1\", \"cabin\": \"ECONOMY\", \"fareBasis\": \"YB6QSMIX\", \"class\": \"Y\", \"includedCheckedBags\": { \"quantity\": 1 } }] }] }, { \"type\": \"flight-offer\", \"id\": \"2\", \"source\": \"GDS\", \"instantTicketingRequired\": false, \"nonHomogeneous\": false, \"oneWay\": false, \"lastTicketingDate\": \"2025-05-01\", \"numberOfBookableSeats\": 9, \"itineraries\": [{ \"duration\": \"PT4H10M\", \"segments\": [{ \"departure\": { \"iataCode\": \"SDQ\", \"at\": \"2025-05-15T11:45:00\" }, \"arrival\": { \"iataCode\": \"JFK\", \"at\": \"2025-05-15T15:55:00\" }, \"carrierCode\": \"DL\", \"number\": \"493\", \"aircraft\": { \"code\": \"757\" }, \"operating\": { \"carrierCode\": \"DL\" }, \"duration\": \"PT4H10M\", \"id\": \"2\", \"numberOfStops\": 0, \"blacklistedInEU\": false }] }] ,\"price\": { \"currency\": \"USD\", \"total\": \"392.40\", \"base\": \"340.00\", \"fees\": [{ \"amount\": \"0.00\", \"type\": \"SUPPLIER\" }, { \"amount\": \"0.00\", \"type\": \"TICKETING\" }] ,\"grandTotal\": \"392.40\" }, \"pricingOptions\": { \"fareType\": [ \"PUBLISHED\" ], \"includedCheckedBagsOnly\": true }, \"validatingAirlineCodes\": [ \"DL\" ], \"travelerPricings\": [{ \"travelerId\": \"1\", \"fareOption\": \"STANDARD\", \"travelerType\": \"ADULT\", \"price\": { \"currency\": \"USD\", \"total\": \"392.40\", \"base\": \"340.00\" }, \"fareDetailsBySegment\": [{ \"segmentId\": \"2\", \"cabin\": \"ECONOMY\", \"fareBasis\": \"YDLQSMIX\", \"class\": \"Y\", \"includedCheckedBags\": { \"quantity\": 1 } }] }] }] ,\"dictionaries\": { \"locations\": { \"SDQ\": { \"cityCode\": \"SDQ\", \"countryCode\": \"DO\" }, \"JFK\": { \"cityCode\": \"NYC\", \"countryCode\": \"US\" } }, \"aircraft\": { \"320\": \"AIRBUS A320\", \"757\": \"BOEING 757-200\" }, \"currencies\": { \"USD\": \"US DOLLAR\" }, \"carriers\": { \"B6\": \"JETBLUE AIRWAYS\", \"DL\": \"DELTA AIR LINES\" } }}",
-        "statusCode": 200
+    {
+        "httpRequest": {
+            "method": "POST",
+            "path": "/shopping/flight-offers",
+            "headers": {
+                "Content-Type": ["application/json"],
+                "Authorization": ["Bearer mock-token-12345"]
+            }
+        },
+        "httpResponse": {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": ["application/json"]
+            },
+            "body": {
+                "data": [
+                    {
+                        "price": {
+                            "total": "365.00",
+                            "currency": "USD"
+                        },
+                        "itineraries": [
+                            {
+                                "duration": "PT4H5M",
+                                "segments": [
+                                    {
+                                        "departure": {
+                                            "iataCode": "SDQ",
+                                            "at": "2025-05-15T02:20:00"
+                                        },
+                                        "arrival": {
+                                            "iataCode": "JFK",
+                                            "at": "2025-05-15T06:25:00"
+                                        },
+                                        "carrierCode": "B6",
+                                        "number": "236"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "price": {
+                            "total": "392.40",
+                            "currency": "USD"
+                        },
+                        "itineraries": [
+                            {
+                                "duration": "PT4H10M",
+                                "segments": [
+                                    {
+                                        "departure": {
+                                            "iataCode": "SDQ",
+                                            "at": "2025-05-15T11:45:00"
+                                        },
+                                        "arrival": {
+                                            "iataCode": "JFK",
+                                            "at": "2025-05-15T15:55:00"
+                                        },
+                                        "carrierCode": "DL",
+                                        "number": "493"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "price": {
+                            "total": "425.60",
+                            "currency": "USD"
+                        },
+                        "itineraries": [
+                            {
+                                "duration": "PT6H30M",
+                                "segments": [
+                                    {
+                                        "departure": {
+                                            "iataCode": "SDQ",
+                                            "at": "2025-05-15T08:30:00"
+                                        },
+                                        "arrival": {
+                                            "iataCode": "MIA",
+                                            "at": "2025-05-15T10:45:00"
+                                        },
+                                        "carrierCode": "AA",
+                                        "number": "1234"
+                                    },
+                                    {
+                                        "departure": {
+                                            "iataCode": "MIA",
+                                            "at": "2025-05-15T12:00:00"
+                                        },
+                                        "arrival": {
+                                            "iataCode": "JFK",
+                                            "at": "2025-05-15T15:00:00"
+                                        },
+                                        "carrierCode": "AA",
+                                        "number": "2345"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "price": {
+                            "total": "512.75",
+                            "currency": "USD"
+                        },
+                        "itineraries": [
+                            {
+                                "duration": "PT7H15M",
+                                "segments": [
+                                    {
+                                        "departure": {
+                                            "iataCode": "SDQ",
+                                            "at": "2025-05-15T14:20:00"
+                                        },
+                                        "arrival": {
+                                            "iataCode": "ATL",
+                                            "at": "2025-05-15T17:45:00"
+                                        },
+                                        "carrierCode": "DL",
+                                        "number": "781"
+                                    },
+                                    {
+                                        "departure": {
+                                            "iataCode": "ATL",
+                                            "at": "2025-05-15T19:00:00"
+                                        },
+                                        "arrival": {
+                                            "iataCode": "JFK",
+                                            "at": "2025-05-15T21:35:00"
+                                        },
+                                        "carrierCode": "DL",
+                                        "number": "982"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
     }
-}
+]

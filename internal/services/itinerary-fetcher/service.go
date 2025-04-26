@@ -3,7 +3,9 @@ package itinerary_fetcher
 import (
 	"context"
 	"errors"
+	"log"
 	"sort"
+	"strconv"
 	"sync"
 
 	"github.com/syned13/flight-prices-api/internal/models"
@@ -60,6 +62,7 @@ func (s *itineraryFetcherService) fetchItineraries(ctx context.Context, request 
 	type result struct {
 		itineraries []models.Itinerary
 		err         error
+		source      string
 	}
 
 	resultChan := make(chan result, 3)
@@ -69,19 +72,19 @@ func (s *itineraryFetcherService) fetchItineraries(ctx context.Context, request 
 	go func() {
 		defer wg.Done()
 		itineraries, err := s.amadeusClient.FetchItineraries(ctx, request)
-		resultChan <- result{itineraries: itineraries, err: err}
+		resultChan <- result{itineraries: itineraries, err: err, source: "Amadeus"}
 	}()
 
 	go func() {
 		defer wg.Done()
 		itineraries, err := s.flightAPIClient.FetchItineraries(ctx, request)
-		resultChan <- result{itineraries: itineraries, err: err}
+		resultChan <- result{itineraries: itineraries, err: err, source: "FlightAPI"}
 	}()
 
 	go func() {
 		defer wg.Done()
 		itineraries, err := s.serpAPIClient.FetchItineraries(ctx, request)
-		resultChan <- result{itineraries: itineraries, err: err}
+		resultChan <- result{itineraries: itineraries, err: err, source: "SerpAPI"}
 	}()
 
 	go func() {
@@ -90,27 +93,71 @@ func (s *itineraryFetcherService) fetchItineraries(ctx context.Context, request 
 	}()
 
 	var allItineraries []models.Itinerary
+	failedFetches := 0
+
 	for res := range resultChan {
 		if res.err != nil {
-			return nil, res.err
+			log.Printf("Error fetching itineraries from %s: %v", res.source, res.err)
+			failedFetches++
+			continue
 		}
+
+		log.Printf("Received %d itineraries from %s", len(res.itineraries), res.source)
+		for _, itin := range res.itineraries {
+			log.Printf("%s price: %s %s", res.source, itin.Price.Total, itin.Price.Currency)
+		}
+
 		allItineraries = append(allItineraries, res.itineraries...)
+	}
+
+	// Only return error if all fetches failed
+	if failedFetches == 3 {
+		return nil, errors.New("all flight price fetches failed")
+	}
+
+	if len(allItineraries) == 0 {
+		return nil, errors.New("no itineraries found")
+	}
+
+	log.Printf("All prices before sorting:")
+	for _, itin := range allItineraries {
+		log.Printf("Price: %s %s", itin.Price.Total, itin.Price.Currency)
 	}
 
 	return allItineraries, nil
 }
 
 func sortItinerariesByPrice(itineraries []models.Itinerary) []models.Itinerary {
-	sort.Slice(itineraries, func(i, j int) bool {
-		return itineraries[i].Price.Total < itineraries[j].Price.Total
+	sorted := make([]models.Itinerary, len(itineraries))
+	copy(sorted, itineraries)
+
+	sort.Slice(sorted, func(i, j int) bool {
+		priceI, errI := strconv.ParseFloat(sorted[i].Price.Total, 64)
+		priceJ, errJ := strconv.ParseFloat(sorted[j].Price.Total, 64)
+
+		if errI != nil {
+			log.Printf("Error parsing price %s: %v", sorted[i].Price.Total, errI)
+			return false
+		}
+		if errJ != nil {
+			log.Printf("Error parsing price %s: %v", sorted[j].Price.Total, errJ)
+			return true
+		}
+
+		return priceI < priceJ
 	})
-	return itineraries
+
+	log.Printf("Sorted prices:")
+	for _, itin := range sorted {
+		log.Printf("Price: %s %s", itin.Price.Total, itin.Price.Currency)
+	}
+
+	return sorted
 }
 
 func sortItinerariesByDuration(itineraries []models.Itinerary) []models.Itinerary {
 	sort.Slice(itineraries, func(i, j int) bool {
-		return itineraries[i].Duration < itineraries[j].Duration
+		return itineraries[i].DurationInMinutes < itineraries[j].DurationInMinutes
 	})
-
 	return itineraries
 }

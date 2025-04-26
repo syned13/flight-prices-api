@@ -71,9 +71,16 @@ func (c *FlightAPIClient) FetchItineraries(ctx context.Context, request models.F
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Connection", "keep-alive")
+
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to execute request: %w", err)
+	}
+
+	if resp == nil {
+		return nil, fmt.Errorf("received nil response")
 	}
 
 	defer resp.Body.Close()
@@ -135,8 +142,8 @@ func (c *FlightAPIClient) FetchItineraries(ctx context.Context, request models.F
 				Currency: request.CurrencyCode,
 				Total:    fmt.Sprintf("%.2f", itin.PricingOptions[0].Price.Amount),
 			},
-			Duration: fmt.Sprintf("%dm", leg.Duration),
-			Stops:    leg.StopCount,
+			DurationInMinutes: leg.Duration,
+			Stops:             leg.StopCount,
 		}
 
 		// Add segments

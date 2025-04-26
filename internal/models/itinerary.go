@@ -3,10 +3,10 @@ package models
 import "time"
 
 type Itinerary struct {
-	Price    Price     `json:"price"`
-	Duration string    `json:"duration"`
-	Segments []Segment `json:"segments"`
-	Stops    int       `json:"stops"`
+	Price             Price     `json:"price"`
+	DurationInMinutes int       `json:"durationInMinutes"`
+	Segments          []Segment `json:"segments"`
+	Stops             int       `json:"stops"`
 }
 
 type Segment struct {
