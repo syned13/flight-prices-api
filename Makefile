@@ -19,3 +19,11 @@ run-with-mocks:
 .PHONY: run-with-mocks-build
 run-with-mocks-build:
 	docker compose -f docker-compose-mock.yml -f docker-compose-local.yml up --build
+
+.PHONY: run-integration-tests
+run-integration-tests:
+	docker compose -f docker-compose-mock.yml -f docker-compose-local.yml up --build && go test -v ./internal/integration
+
+.PHONY: run-unit-tests
+run-unit-tests:
+	go test -v ./...

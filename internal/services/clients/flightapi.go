@@ -94,7 +94,6 @@ func (c *FlightAPIClient) FetchItineraries(ctx context.Context, request models.F
 		return nil, fmt.Errorf("failed to decode response: %w", err)
 	}
 
-	// Create a map for quick lookup of legs and segments
 	legMap := make(map[string]struct {
 		ID         string   `json:"id"`
 		Departure  string   `json:"departure"`
@@ -146,7 +145,6 @@ func (c *FlightAPIClient) FetchItineraries(ctx context.Context, request models.F
 			Stops:             leg.StopCount,
 		}
 
-		// Add segments
 		for _, segID := range leg.SegmentIDs {
 			seg, ok := segmentMap[segID]
 			if !ok {

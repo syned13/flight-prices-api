@@ -59,6 +59,12 @@ func main() {
 
 	router := mux.NewRouter()
 
+	// Health endpoint for integration tests
+	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("ok"))
+	}).Methods("GET")
+
 	// Initialize controllers
 	authController := controllers.NewAuthController(router, authService)
 	flightSearchController := controllers.NewFlightSearchController(router, itineraryFetcherService)

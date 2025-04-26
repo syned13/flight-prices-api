@@ -83,7 +83,6 @@ func NewSerpAPIClient() *SerpAPIClient {
 }
 
 func (c *SerpAPIClient) FetchItineraries(ctx context.Context, request models.FlightSearchRequest) ([]models.Itinerary, error) {
-	// Build query parameters
 	params := url.Values{}
 	params.Add("engine", "google_flights")
 	params.Add("departure_id", request.Origin)
@@ -92,14 +91,12 @@ func (c *SerpAPIClient) FetchItineraries(ctx context.Context, request models.Fli
 	params.Add("currency", request.CurrencyCode)
 	params.Add("api_key", c.apiKey)
 
-	// Create request
 	reqURL := fmt.Sprintf("%s/search?%s", c.baseURL, params.Encode())
 	req, err := http.NewRequestWithContext(ctx, "GET", reqURL, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
-	// Execute request
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to execute request: %w", err)
@@ -110,7 +107,6 @@ func (c *SerpAPIClient) FetchItineraries(ctx context.Context, request models.Fli
 		return nil, fmt.Errorf("request failed with status: %d", resp.StatusCode)
 	}
 
-	// Parse response
 	var serpResp serpAPIResponse
 	if err := json.NewDecoder(resp.Body).Decode(&serpResp); err != nil {
 		return nil, fmt.Errorf("failed to decode response: %w", err)
@@ -118,7 +114,6 @@ func (c *SerpAPIClient) FetchItineraries(ctx context.Context, request models.Fli
 
 	var itineraries []models.Itinerary
 
-	// Process best flights
 	for _, flight := range serpResp.BestFlights {
 		itinerary := models.Itinerary{
 			Price: models.Price{
@@ -129,7 +124,6 @@ func (c *SerpAPIClient) FetchItineraries(ctx context.Context, request models.Fli
 			Stops:             len(flight.Layovers),
 		}
 
-		// Add segments
 		for _, segment := range flight.Flights {
 			departureTime, _ := time.Parse("2006-01-02 15:04", segment.DepartureAirport.Time)
 			arrivalTime, _ := time.Parse("2006-01-02 15:04", segment.ArrivalAirport.Time)
@@ -148,7 +142,6 @@ func (c *SerpAPIClient) FetchItineraries(ctx context.Context, request models.Fli
 		itineraries = append(itineraries, itinerary)
 	}
 
-	// Process other flights
 	for _, flight := range serpResp.OtherFlights {
 		itinerary := models.Itinerary{
 			Price: models.Price{
@@ -159,7 +152,6 @@ func (c *SerpAPIClient) FetchItineraries(ctx context.Context, request models.Fli
 			Stops:             len(flight.Layovers),
 		}
 
-		// Add segments
 		for _, segment := range flight.Flights {
 			departureTime, _ := time.Parse("2006-01-02 15:04", segment.DepartureAirport.Time)
 			arrivalTime, _ := time.Parse("2006-01-02 15:04", segment.ArrivalAirport.Time)
