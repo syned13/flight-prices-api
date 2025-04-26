@@ -20,7 +20,11 @@ func main() {
 	router := mux.NewRouter()
 
 	itineraryFetcherService := itinerary_fetcher.NewItineraryFetcherService()
+
+	authController := controllers.NewAuthController(router)
 	flightSearchController := controllers.NewFlightSearchController(router, itineraryFetcherService)
+
+	authController.RegisterRoutes()
 	flightSearchController.RegisterRoutes()
 
 	log.Printf("Starting server on port %s", appConfig.HTTPPort())

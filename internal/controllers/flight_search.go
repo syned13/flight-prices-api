@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/syned13/flight-prices-api/internal/middleware"
 	itinerary_fetcher "github.com/syned13/flight-prices-api/internal/services/itinerary-fetcher"
 )
 
@@ -20,7 +21,7 @@ func NewFlightSearchController(router *mux.Router, itineraryFetcherService itine
 }
 
 func (c *FlightSearchController) RegisterRoutes() {
-	c.router.HandleFunc("/flight-search", c.SearchFlights).Methods("GET")
+	c.router.HandleFunc("/flight-search", middleware.AuthMiddleware(c.SearchFlights)).Methods("GET")
 }
 
 func (c *FlightSearchController) SearchFlights(w http.ResponseWriter, r *http.Request) {
