@@ -103,9 +103,6 @@ func (s *itineraryFetcherService) fetchItineraries(ctx context.Context, request 
 		}
 
 		log.Printf("Received %d itineraries from %s", len(res.itineraries), res.source)
-		for _, itin := range res.itineraries {
-			log.Printf("%s price: %s %s", res.source, itin.Price.Total, itin.Price.Currency)
-		}
 
 		allItineraries = append(allItineraries, res.itineraries...)
 	}
@@ -117,11 +114,6 @@ func (s *itineraryFetcherService) fetchItineraries(ctx context.Context, request 
 
 	if len(allItineraries) == 0 {
 		return nil, errors.New("no itineraries found")
-	}
-
-	log.Printf("All prices before sorting:")
-	for _, itin := range allItineraries {
-		log.Printf("Price: %s %s", itin.Price.Total, itin.Price.Currency)
 	}
 
 	return allItineraries, nil
@@ -147,11 +139,6 @@ func sortItinerariesByPrice(itineraries []models.Itinerary) []models.Itinerary {
 		return priceI < priceJ
 	})
 
-	log.Printf("Sorted prices:")
-	for _, itin := range sorted {
-		log.Printf("Price: %s %s", itin.Price.Total, itin.Price.Currency)
-	}
-
 	return sorted
 }
 
@@ -159,5 +146,6 @@ func sortItinerariesByDuration(itineraries []models.Itinerary) []models.Itinerar
 	sort.Slice(itineraries, func(i, j int) bool {
 		return itineraries[i].DurationInMinutes < itineraries[j].DurationInMinutes
 	})
+
 	return itineraries
 }

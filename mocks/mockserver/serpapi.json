@@ -1,14 +1,7 @@
 {
     "httpRequest": {
         "method": "GET",
-        "pathPattern": "/search.*",
-        "queryStringParameters": {
-            "engine": ["google_flights"],
-            "departure_id": [".*"],
-            "arrival_id": [".*"],
-            "outbound_date": [".*"],
-            "currency": [".*"]
-        }
+        "path": "/search.*"
     },
     "httpResponse": {
         "statusCode": 200,
